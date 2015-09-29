@@ -1,0 +1,94 @@
+<%= form_for @cliente, :html => {:class => 'form-horizontal'} do |f| %>
+  <% if @cliente.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cliente.errors.count, "erro") %> não permitiram que este cliente fosse salvo:</h2>
+
+      <% @cliente.errors.full_messages.each do |message| %>
+        <div class="alert alert-danger"><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :nome, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :nome, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cep, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+	    <%= f.text_field :cep, :id => "cep", class: "form-control" %>
+    </div>
+	<a href="#" class="btn btn-info" id="consultacep">Consultar CEP</a>
+	<span id="erroconsultacep"></span>
+  </div>
+  <div class="form-group">
+    <%= f.label :endereço, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :endereco, :id => "endereco", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :complemento, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :complemento, :id => "complemento", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :bairro, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :bairro, :id => "bairro", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cidade, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :cidade, :id => "cidade", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :UF, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+	    <%= f.select :uf, options_for_select(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS',  
+	    	 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO']), 
+	    	{include_blank: "Selecione..."}, {class: 'form-control', id: 'uf'} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :telefone, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.text_field :telefone, :id => "telefone", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :celular, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.text_field :celular, :id => "celular", class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :data_de_nascimento, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.text_field :data_nascimento, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @cliente.data_nascimento.nil? ? @cliente.data_nascimento : l(@cliente.data_nascimento) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :email, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :observações, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-8">
+    	<%= f.text_area :observacoes, class: "form-control" %>
+    </div>
+  </div>
+  
+  <div class="col-sm-1">
+	  <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+	  	<i class="glyphicon glyphicon-floppy-disk"></i> Salvar
+	  <% end %>
+  </div>
+  
+<% end %>

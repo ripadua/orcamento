@@ -1,0 +1,66 @@
+<% unless notice.nil? %>
+	<p id="notice" class="alert alert-success"><%= notice %></p>
+<% end %>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @cliente.nome %>
+</p>
+
+<p>
+  <strong>Endereço:</strong>
+  <%= @cliente.endereco %>
+</p>
+
+<p>
+  <strong>Complemento:</strong>
+  <%= @cliente.complemento %>
+</p>
+
+<p>
+  <strong>Bairro:</strong>
+  <%= @cliente.bairro %>
+</p>
+
+<p>
+  <strong>Cidade:</strong>
+  <%= @cliente.cidade %>
+</p>
+
+<p>
+  <strong>Cep:</strong>
+  <%= @cliente.cep %>
+</p>
+
+<p>
+  <strong>UF:</strong>
+  <%= @cliente.uf %>
+</p>
+
+<p>
+  <strong>Telefone:</strong>
+  <%= @cliente.telefone %>
+</p>
+
+<p>
+  <strong>Celular:</strong>
+  <%= @cliente.celular %>
+</p>
+
+<p>
+  <strong>Data de nascimento:</strong>
+  <%= l @cliente.data_nascimento %>
+</p>
+
+<p>
+  <strong>E-mail:</strong>
+  <%= @cliente.email %>
+</p>
+
+<p>
+  <strong>Observações:</strong>
+  <%= @cliente.observacoes %>
+</p>
+
+<%= link_to 'Alterar', edit_cliente_path(@cliente) %> |
+<%= link_to 'Voltar', clientes_path %>

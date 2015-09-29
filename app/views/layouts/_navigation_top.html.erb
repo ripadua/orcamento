@@ -1,0 +1,22 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<%= link_to root_path, class: 'navbar-brand logo' do %>
+			<%= image_tag 'logo.png', width: '120' %>
+			<% end %>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+			<li>
+				<p class="navbar-text">
+					Bem vindo(a), <%= current_usuario.nome %>!
+				</p>
+			</li>
+			<li>
+				<%= link_to('Editar usuario', edit_usuario_registration_path) %>
+			</li>
+			<li>
+				<%= link_to('Sair', destroy_usuario_session_path, :method=>'delete') %>
+			</li>
+		</ul>
+	</div>
+</nav>
