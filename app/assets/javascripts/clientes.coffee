@@ -31,3 +31,6 @@ $ ->
 	$("#menu-toggle").on "click", (e) ->
 		e.preventDefault()
 		$("#conteudo").toggleClass('ativo')
+
+$ ->
+	 $('[data-toggle="tooltip"]').tooltip();

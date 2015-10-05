@@ -10,17 +10,15 @@
 		</div>
 		<ul class="nav navbar-nav navbar-right hidden-xs">
 			<li>
-				<p class="navbar-text">
-					Bem vindo(a), <%= current_usuario.nome %>!
-				</p>
+				<%= link_to edit_usuario_registration_path, data: {toggle: "tooltip", placement: "bottom"}, title: "Editar Usuário" do %>
+					Bem vindo(a), <%= current_usuario.nome %>
+				<% end %>
 			</li>
 			<li>
-				<%= link_to('Editar usuario', edit_usuario_registration_path) %>
-			</li>
-			<li>
-				<%= link_to('Sair', destroy_usuario_session_path, :method=>'delete') %>
+				<%= link_to(destroy_usuario_session_path, :method=>'delete') do %>
+					<i class="glyphicon glyphicon-off" style="float: right" data-toggle="tooltip" data-placement="bottom" title="Sair"></i> 
+				<% end %>
 			</li>
 		</ul>
-			
 	</div>
 </nav>
