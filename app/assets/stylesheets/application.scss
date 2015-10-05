@@ -2,11 +2,23 @@
  @import "bootstrap";
  @import "bootstrap-datepicker3";
  
+html{
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+}
+
 .logo {
   padding-top: 10px;
 }
 
-.col-centered{
-    float: none;
-    margin: 0 auto;
+.login-centered {
+  float: none;
+  margin: auto;
+  margin-top: 5%;
+  width: 290px;
+  height: 284px;
 }
+

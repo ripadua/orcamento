@@ -1,4 +1,4 @@
-<div class="col-md-3 col-centered">
+<div class="login-centered">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h2 class="panel-title text-center">Expresso</h2>
@@ -6,15 +6,11 @@
 		<div class='panel-body'>
 			<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 			<div class="form-group">
-				<%= f.label :email %>
-				<br />
-				<%= f.email_field :email, autofocus: true, class: 'form-control' %>
+				<%= f.email_field :email, autofocus: true, class: 'form-control', placeholder: :email %>
 			</div>
 
 			<div class="form-group">
-				<%= f.label :senha %>
-				<br />
-				<%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+				<%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: :password %>
 			</div>
 
 			<% if devise_mapping.rememberable? -%>
@@ -28,9 +24,7 @@
 				<%= f.submit "Entrar", class: 'btn btn-primary' %>
 			</div>
 			<% end %>
-			
-			<br/>
-			
+
 			<%= render "devise/shared/links" %>
 		</div>
 	</div>
