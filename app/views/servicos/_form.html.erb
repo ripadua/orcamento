@@ -1,0 +1,42 @@
+<%= form_for @servico, :html => {:class => 'form-horizontal'} do |f| %>
+<% if @servico.errors.any? %>
+<div id="error_explanation">
+	<h2><%= pluralize(@servico.errors.count, "erro") %> não permitiram que este serviço fosse salvo:</h2>
+
+	<% @servico.errors.full_messages.each do |message| %>
+	<div class="alert alert-danger">
+		<%= message %>
+	</div>
+	<% end %>
+</div>
+<% end %>
+
+<div class="form-group">
+	<%= f.label :nome, class: 'col-sm-2 control-label' %>
+	<div class="col-sm-4">
+		<%= f.text_field :nome, class: "form-control", autofocus: true %>
+	</div>
+</div>
+<div class="form-group">
+	<%= f.label :unidade, class: 'col-sm-2 control-label' %>
+	<div class="col-sm-2">
+		<%= f.text_field :unidade, class: "form-control" %>
+	</div>
+</div>
+<div class="form-group">
+	<%= f.label :valor, class: 'col-sm-2 control-label' %>
+	<div class="col-sm-2">
+		<%= f.text_field :valor, id: "valor", class: "form-control" %>
+	</div>
+</div>
+
+<div class="pull-right">
+	<%= link_to servicos_path, class: "btn btn-default" do %>
+		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
+	<% end %>
+	<%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+		<i class="glyphicon glyphicon-floppy-disk"></i> Salvar
+	<% end %>
+</div>
+
+<% end %>

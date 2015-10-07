@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :servicos
   devise_for :usuarios
   resources :clientes 
   # The priority is based upon order of creation: first created -> highest priority.

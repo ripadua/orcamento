@@ -1,0 +1,35 @@
+<% unless notice.nil? %>
+<p id="notice" class="alert alert-success">
+	<%= notice %>
+</p>
+<% end %>
+
+<div class="page-header">
+	<h1>Visualizando serviço</h1>
+</div>
+
+
+<p>
+	<strong>Nome:</strong>
+	<%= @servico.nome %>
+</p>
+
+<p>
+	<strong>Unidade:</strong>
+	<%= @servico.unidade %>
+</p>
+
+<p>
+	<strong>Valor:</strong>
+	<%= number_to_currency(@servico.valor) %>
+</p>
+
+<div class="pull-right">
+	<%= link_to servicos_path, class: "btn btn-default" do %>
+		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
+	<% end %>
+	
+	<%= link_to edit_servico_path(@servico), class: "btn btn-info" do %>
+		<i class="glyphicon glyphicon-pencil"></i> Alterar
+	<% end %> 
+</div>

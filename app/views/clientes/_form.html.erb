@@ -11,7 +11,7 @@
   <div class="form-group">
     <%= f.label :nome, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-    	<%= f.text_field :nome, class: "form-control" %>
+    	<%= f.text_field :nome, class: "form-control", autofocus: true %>
     </div>
   </div>
   <div class="form-group">
@@ -85,7 +85,10 @@
     </div>
   </div>
   
-  <div class="col-sm-1">
+  <div class="pull-right">
+	<%= link_to clientes_path, class: "btn btn-default" do %>
+		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
+	<% end %>
 	  <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
 	  	<i class="glyphicon glyphicon-floppy-disk"></i> Salvar
 	  <% end %>
