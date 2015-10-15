@@ -5,6 +5,10 @@ $ ->
 	$("#cep").inputmask('99999-999');
 	$("#telefone").inputmask('(99) 9999-9999');
 	$("#celular").inputmask('(99) 9999-9999');
+	$("#campo_cpf").inputmask('999.999.999-99');
+	$("#campo_cnpj").inputmask('99.999.999/9999-99');
+	curr = $("#tipopessoa").val()
+	atualiza(curr)
 
 $ ->
 	$("#consultacep").on "click", () -> 
@@ -34,3 +38,34 @@ $ ->
 
 $ ->
 	 $('[data-toggle="tooltip"]').tooltip();
+	 
+$ ->
+	$("#tipopessoa").change (e) ->
+		curr = e.target.value.toLowerCase()
+		atualiza(curr)
+			
+atualiza = (curr) ->
+	if curr == '1'
+		$("#razao_social").show()
+		$("#contato").show()
+		$("#cnpj").show()
+		$("#campo_razao_social").prop('disabled', false)
+		$("#campo_contato").prop('disabled', false)
+		$("#campo_cnpj").prop('disabled', false)
+		
+		$("#cpf").hide()
+		$("#nome").hide()
+		$("#campo_cpf").prop('disabled', true)
+		$("#campo_nome").prop('disabled', true)
+	else
+		$("#nome").show()
+		$("#cpf").show()
+		$("#campo_nome").prop('disabled', false)
+		$("#campo_cpf").prop('disabled', false)
+		
+		$("#cnpj").hide()
+		$("#razao_social").hide()
+		$("#contato").hide()
+		$("#campo_cnpj").prop('disabled', true);
+		$("#campo_razao_social").prop('disabled', true);
+		$("#campo_contato").prop('disabled', true);

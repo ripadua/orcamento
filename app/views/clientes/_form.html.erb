@@ -9,13 +9,44 @@
     </div>
   <% end %>
   <div class="form-group">
+    <%= f.label :tipo_pessoa, "Tipo Pessoa", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.select :tipo_pessoa, options_for_select([['Física', 0], ['Jurídica',1]], @cliente.tipo_pessoa), 
+	    	{}, {id: "tipopessoa", class: 'form-control'} %>
+    </div>
+  </div>
+  <div id="nome" class="form-group">
     <%= f.label :nome, class: 'col-sm-2 control-label' %>
     <div class="col-sm-4">
-    	<%= f.text_field :nome, class: "form-control", autofocus: true %>
+    	<%= f.text_field :nome, id: "campo_nome", class: "form-control", autofocus: true %>
+    </div>
+  </div>
+  <div id="razao_social" class="form-group">
+    <%= f.label "Razão Social", "Razão Social", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :nome, id: "campo_razao_social", class: "form-control", autofocus: true %>
+    </div>
+  </div>
+  <div id="contato" class="form-group">
+    <%= f.label :contato, class: 'col-sm-2 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.text_field :contato, id: "campo_contato", class: "form-control" %>
+    </div>
+  </div>
+  <div id="cpf" class="form-group">
+    <%= f.label :cpf, "CPF", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.text_field :documento, id: "campo_cpf", class: "form-control" %>
+    </div>
+  </div>
+  <div id="cnpj" class="form-group">
+    <%= f.label :cnpj, "CNPJ", class: 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
+    	<%= f.text_field :documento, id: "campo_cnpj", class: "form-control" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :cep, class: 'col-sm-2 control-label' %>
+    <%= f.label :cep, "CEP", class: 'col-sm-2 control-label' %>
     <div class="col-sm-2">
 	    <%= f.text_field :cep, :id => "cep", class: "form-control" %>
     </div>
@@ -47,10 +78,10 @@
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :UF, class: 'col-sm-2 control-label' %>
+    <%= f.label :UF, "UF", class: 'col-sm-2 control-label' %>
     <div class="col-sm-2">
 	    <%= f.select :uf, options_for_select(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS',  
-	    	 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO']), 
+	    	 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO'], @cliente.uf), 
 	    	{include_blank: "Selecione..."}, {class: 'form-control', id: 'uf'} %>
     </div>
   </div>
@@ -67,7 +98,7 @@
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :data_de_nascimento, class: 'col-sm-2 control-label' %>
+    <%= f.label :data_de_nascimento, "Data de Nascimento", class: 'col-sm-2 control-label' %>
     <div class="col-sm-2">
     	<%= f.text_field :data_nascimento, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @cliente.data_nascimento.nil? ? @cliente.data_nascimento : l(@cliente.data_nascimento) %>
     </div>

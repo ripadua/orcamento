@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  data: 2015-10-08
+  cliente_id: 
+  descricao: MyString
+  forma_pagamento: MyString
+  observacoes: MyString
+  validade: 2015-10-08
+
+two:
+  data: 2015-10-08
+  cliente_id: 
+  descricao: MyString
+  forma_pagamento: MyString
+  observacoes: MyString
+  validade: 2015-10-08

@@ -11,24 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005195358) do
+ActiveRecord::Schema.define(version: 20151008164737) do
 
-  create_table "clientes", force: :cascade do |t|
-    t.string   "nome"
-    t.string   "endereco"
-    t.string   "bairro"
-    t.string   "cidade"
-    t.string   "cep"
-    t.string   "uf"
-    t.string   "telefone"
-    t.string   "celular"
-    t.date     "data_nascimento"
-    t.string   "email"
-    t.text     "observacoes"
+# Could not dump table "clientes" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
+
+  create_table "orcamentos", force: :cascade do |t|
+    t.date     "data"
+    t.integer  "cliente_id"
+    t.string   "descricao"
+    t.string   "forma_pagamento"
+    t.string   "observacoes"
+    t.date     "validade"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.string   "complemento"
   end
+
+  add_index "orcamentos", ["cliente_id"], name: "index_orcamentos_on_cliente_id"
 
   create_table "servicos", force: :cascade do |t|
     t.string   "nome"

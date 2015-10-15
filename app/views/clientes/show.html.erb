@@ -7,9 +7,35 @@
 </div>
 
 <p>
+  <strong>Pessoa:</strong>
+  <% if @cliente.tipo_pessoa == 0 %>
+  	Física
+  <% else %>
+  	Jurídica
+  <% end %>
+</p>
+
+<p>
   <strong>Nome:</strong>
   <%= @cliente.nome %>
 </p>
+
+<p>
+	<% if @cliente.tipo_pessoa == 0 %>
+		<strong>CPF:</strong>
+  	<% else %>
+  		<strong>CNPJ:</strong>
+  	<% end %>
+  <%= @cliente.documento %>
+</p>
+
+<% if @cliente.tipo_pessoa == 1 %>
+	<p>
+		<strong>Contato:</strong>
+  		<%= @cliente.contato %>
+	</p>
+<% end %>
+
 
 <p>
   <strong>Endereço:</strong>

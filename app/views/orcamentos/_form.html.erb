@@ -1,0 +1,86 @@
+<%= form_for @orcamento, :html => {:class => 'form-horizontal'} do |f| %>
+  <% if @orcamento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@orcamento.errors.count, "erro") %> não permitiram que este orçamento fosse salvo:</h2>
+
+      <% @orcamento.errors.full_messages.each do |message| %>
+        <div class="alert alert-danger"><%= message %></div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :data, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.text_field :data, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.data.nil? ? @orcamento.data : l(@orcamento.data) %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :cliente_id, class: 'col-sm-3 control-label' %>
+    <div class="col-sm-4">
+    	<%= f.collection_select(:cliente_id, Cliente.all, :id, :nome, {prompt: true}, {class: 'form-control'})  %>
+    </div>
+  </div>
+  <div id="infoCliente">
+	  <div class="form-group" style="padding-top: 5px;">
+	  	<%= f.label :endereco, "Endereço", class: 'col-sm-3', style: 'text-align: right' %>
+	  	<div class="col-sm-8">
+	  		<p id="clienteEndereco">
+		  		<% if @orcamento.cliente.present? %>
+	  				<%= @orcamento.cliente.endereco + ", " + @orcamento.cliente.complemento + " - " + @orcamento.cliente.bairro + " - " + @orcamento.cliente.cidade + " - " + @orcamento.cliente.uf %>
+			  	<% end %>
+	  		</p>
+	  	</div>
+	  </div>
+	  <div class="form-group">
+	  	<%= f.label :telefones, class: 'col-sm-3', style: 'text-align: right' %>
+	  	<div class="col-sm-8">
+	  		<p id="clienteTelefones">
+	  			<% if @orcamento.cliente.present? %>
+	  				<% if @orcamento.cliente.telefone.present? && @orcamento.cliente.celular.present? %>
+	  					<%= @orcamento.cliente.telefone + " - " + @orcamento.cliente.celular %>
+	  				<% elsif @orcamento.cliente.telefone.present? %>
+	  					<%= @orcamento.cliente.telefone %>
+	  				<% else %>
+	  					<%= @orcamento.cliente.celular %>
+	  				<% end %>
+	  			<% end %>
+	  		</p>
+	  	</div>
+	  </div>
+	  
+  </div>
+  <div class="form-group">
+    <%= f.label :descricao, "Descrição",class: 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+    	<%= f.text_field :descricao, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :forma_pagamento, "Forma de Pagamento", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+    	<%= f.text_field :forma_pagamento, class: 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :observacoes, "Observações", class: 'col-sm-3 control-label' %>
+    <div class="col-sm-8">
+    	<%= f.text_area :observacoes, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :validade, "Data de Validade",class: 'col-sm-3 control-label' %>
+    <div class="col-sm-2">
+    	<%= f.text_field :validade, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.validade.nil? ? @orcamento.validade : l(@orcamento.validade) %>
+    </div>
+  </div>
+  
+  <div class="pull-right">
+	<%= link_to orcamentos_path, class: "btn btn-default" do %>
+		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
+	<% end %>
+	  <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+	  	<i class="glyphicon glyphicon-floppy-disk"></i> Salvar
+	  <% end %>
+  </div>
+<% end %>
