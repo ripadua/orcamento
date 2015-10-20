@@ -12,25 +12,11 @@
 //
 //= require jquery
 //= require bootstrap-sprockets
-//= require jquery-ui
 //= require jquery_ujs
 //= require jquery.turbolinks
 //= require turbolinks
 //= require jquery.inputmask
-//= require jquery.inputmask.extensions
-//= require jquery.inputmask.numeric.extensions
-//= require jquery.inputmask.date.extensions
 //= require bootstrap
-//= require bootstrap-datepicker
-//= require_tree .
-
-$(function() {
-  $('#loading-indicator').hide();  // hide it initially.
-  $(document)  
-    .ajaxStart(function() {
-      $('#loading-indicator').show(); // show on any Ajax event.
-    })
-    .ajaxStop(function() {
-      $('#loading-indicator').hide(); // hide it when it is done.
-  });
-});
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.pt.js
+//= require_directory ./global
