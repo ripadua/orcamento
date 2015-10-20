@@ -15,10 +15,16 @@ body {
 }
 
 .login-centered {
-  float: none;
-  margin: auto;
-  margin-top: 5%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 290px;
   height: 284px;
 }
 
+#loading-indicator {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+ }
