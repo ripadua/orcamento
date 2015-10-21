@@ -58,11 +58,6 @@ $ ->
 			    	$("#erroconsultacep").text ""
 
 $ ->
-	$("#menu-toggle").on "click", (e) ->
-		e.preventDefault()
-		$("#conteudo").toggleClass('ativo')
-
-$ ->
 	$("#tipopessoa").change (e) ->
 		curr = e.target.value.toLowerCase()
 		atualiza(curr)
