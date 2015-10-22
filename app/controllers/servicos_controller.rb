@@ -4,7 +4,7 @@ class ServicosController < ApplicationController
   # GET /servicos
   # GET /servicos.json
   def index
-    @servicos = Servico.all
+    @servicos = Servico.order(:nome).page params[:page]
   end
 
   # GET /servicos/1

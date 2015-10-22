@@ -56,3 +56,7 @@ gem 'devise'
 gem 'bootstrap-sass'
 
 gem 'bootstrap-datepicker-rails'
+
+gem 'kaminari'
+
+gem 'bootstrap-kaminari-views'

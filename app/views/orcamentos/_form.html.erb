@@ -84,24 +84,32 @@
         </thead>
         <tbody>
           <% @orcamento.orcamento_servicos.each do |s| %>
-              <tr>
-                <td align="right">
-                  <input type='hidden' name='orcamento_servicos[][quantidade]' value='<%= s.quantidade %>'></input>
-                  <%= s.quantidade %></td>
-                <td align="center"><%= s.servico.unidade %></td>
-                <td>
-                  <input type='hidden' name='orcamento_servicos[][servico_id]' value='<%= s.servico.id %>'></input>
-                  <%= s.servico.nome %></td>
-                <td align="right"><%= number_to_currency(s.servico.valor) %></td>
-                <td align="right"><%= number_to_currency(s.servico.valor * s.quantidade)  %></td>
-                <td align="center"><i class="glyphicon glyphicon-remove deletarServico" title="Remover"></i></td>
-              </tr>
+            <tr>
+              <td align="right">
+                <input type='hidden' name='orcamento_servicos[][quantidade]' value='<%= s.quantidade %>'></input>
+                <%= s.quantidade %></td>
+              <td align="center"><%= s.servico.unidade %></td>
+              <td>
+                <input type='hidden' name='orcamento_servicos[][servico_id]' value='<%= s.servico.id %>'></input>
+                <%= s.servico.nome %></td>
+              <td align="right"><%= number_to_currency(s.servico.valor) %></td>
+              <td align="right"><%= number_to_currency(s.servico.valor * s.quantidade)  %></td>
+              <td align="center">
+                <a href="#" class="deletarServico btn btn-danger btn-xs" val='<%= s.servico.valor * s.quantidade %>'>
+                  <i class="glyphicon glyphicon-remove" title="Remover"></i>
+                </a>
+              </td>
+            </tr>
           <% end %>
         </tbody>
         <tfoot>
           <tr>
             <td colspan="4" class="rodapeTabela">Total:</td>
-            <td id="totalServicos" class="rodapeTabela"><%= number_to_currency(@orcamento.valor_total) %></td>
+            <td class="rodapeTabela">
+              <input type='hidden' id='hdnTotalServicos' value='<%= @orcamento.valor_total %>'>
+              <span id="totalServicos"><%= number_to_currency(@orcamento.valor_total) %></span>
+            </td>
+            <td></td>
           </tr>
         </tfoot>
       </table>

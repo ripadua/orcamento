@@ -132,11 +132,22 @@ pt-BR:
         other: 'Não foi possível gravar %{model}: %{count} erros.'
   helpers:
     select:
-      prompt: Por favor selecione
+      prompt: Por favor selecione...
     submit:
       create: Criar %{model}
       submit: Salvar %{model}
       update: Atualizar %{model}
+    label:
+      cliente:
+        tipo_pessoa: Tipo Pessoa
+        cpf: CPF
+        cnpj: CNPJ
+        cep: CEP
+        endereco: Endereço
+        uf: UF
+        data_de_nascimento: Data de Nascimento
+        email: E-mail
+        observacoes: Observações
   number:
     currency:
       format:

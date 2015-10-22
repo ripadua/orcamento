@@ -1,7 +1,7 @@
 <%= form_for @cliente, :html => {:class => 'form-horizontal'} do |f| %>
   <% if @cliente.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cliente.errors.count, "erro") %> não permitiram que este cliente fosse salvo:</h2>
+      <h3><%= pluralize(@cliente.errors.count, "erro") %> não permitiram que este cliente fosse salvo:</h3>
 
       <% @cliente.errors.full_messages.each do |message| %>
         <div class="alert alert-danger"><%= message %></div>
@@ -9,117 +9,116 @@
     </div>
   <% end %>
   <div class="form-group">
-    <%= f.label :tipo_pessoa, "Tipo Pessoa", class: 'col-sm-2 control-label' %>
+    <%= f.label :tipo_pessoa %>
     <div class="col-sm-2">
-    	<%= f.select :tipo_pessoa, options_for_select([['Física', 0], ['Jurídica',1]], @cliente.tipo_pessoa), 
-	    	{}, {id: "tipopessoa", class: 'form-control'} %>
+    	<%= f.select :tipo_pessoa, options_for_select(listar_tipos_pessoa, @cliente.tipo_pessoa), 
+	    	{}, {id: "tipopessoa"} %>
     </div>
   </div>
   <div id="nome" class="form-group">
-    <%= f.label :nome, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-    	<%= f.text_field :nome, id: "campo_nome", class: "form-control", autofocus: true %>
+    <%= f.label :nome %>
+    <div class="col-sm-8">
+    	<%= f.text_field :nome, id: "campo_nome", autofocus: true %>
     </div>
   </div>
   <div id="razao_social" class="form-group">
-    <%= f.label "Razão Social", "Razão Social", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-    	<%= f.text_field :nome, id: "campo_razao_social", class: "form-control", autofocus: true %>
+    <%= f.label "Razão Social", "Razão Social" %>
+    <div class="col-sm-8">
+    	<%= f.text_field :nome, id: "campo_razao_social", autofocus: true %>
     </div>
   </div>
   <div id="contato" class="form-group">
-    <%= f.label :contato, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-    	<%= f.text_field :contato, id: "campo_contato", class: "form-control" %>
+    <%= f.label :contato %>
+    <div class="col-sm-8">
+    	<%= f.text_field :contato, id: "campo_contato" %>
     </div>
   </div>
   <div id="cpf" class="form-group">
-    <%= f.label :cpf, "CPF", class: 'col-sm-2 control-label' %>
+    <%= f.label :cpf %>
     <div class="col-sm-2">
-    	<%= f.text_field :documento, id: "campo_cpf", class: "form-control" %>
+    	<%= f.text_field :documento, id: "campo_cpf" %>
     </div>
   </div>
   <div id="cnpj" class="form-group">
-    <%= f.label :cnpj, "CNPJ", class: 'col-sm-2 control-label' %>
+    <%= f.label :cnpj %>
     <div class="col-sm-3">
-    	<%= f.text_field :documento, id: "campo_cnpj", class: "form-control" %>
+    	<%= f.text_field :documento, id: "campo_cnpj" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :cep, "CEP", class: 'col-sm-2 control-label' %>
+    <%= f.label :cep %>
     <div class="col-sm-2">
-	    <%= f.text_field :cep, :id => "cep", class: "form-control" %>
+	    <%= f.text_field :cep, :id => "cep" %>
     </div>
-	<a href="#" class="btn btn-info" id="consultacep">Consultar CEP</a>
+	<a href="#" class="btn btn-info" id="consultacep"><i class="glyphicon glyphicon-search"></i> Consultar CEP</a>
 	<span id="erroconsultacep"></span>
   </div>
   <div class="form-group">
-    <%= f.label :endereço, class: 'col-sm-2 control-label' %>
-    <div class="col-sm-4">
-    	<%= f.text_field :endereco, :id => "endereco", class: "form-control" %>
+    <%= f.label :endereco %>
+    <div class="col-sm-8">
+    	<%= f.text_field :endereco, :id => "endereco" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :complemento, class: 'col-sm-2 control-label' %>
+    <%= f.label :complemento %>
     <div class="col-sm-4">
-    	<%= f.text_field :complemento, :id => "complemento", class: "form-control" %>
+    	<%= f.text_field :complemento, :id => "complemento" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :bairro, class: 'col-sm-2 control-label' %>
+    <%= f.label :bairro %>
     <div class="col-sm-4">
-    	<%= f.text_field :bairro, :id => "bairro", class: "form-control" %>
+    	<%= f.text_field :bairro, :id => "bairro" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :cidade, class: 'col-sm-2 control-label' %>
+    <%= f.label :cidade %>
     <div class="col-sm-4">
-    	<%= f.text_field :cidade, :id => "cidade", class: "form-control" %>
+    	<%= f.text_field :cidade, :id => "cidade" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :UF, "UF", class: 'col-sm-2 control-label' %>
+    <%= f.label :uf %>
     <div class="col-sm-2">
-	    <%= f.select :uf, options_for_select(['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS',  
-	    	 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO'], @cliente.uf), 
+	    <%= f.select :uf, options_for_select(listar_ufs, @cliente.uf), 
 	    	{include_blank: "Selecione..."}, {class: 'form-control', id: 'uf'} %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :telefone, class: 'col-sm-2 control-label' %>
+    <%= f.label :telefone %>
     <div class="col-sm-2">
-    	<%= f.text_field :telefone, :id => "telefone", class: "form-control" %>
+    	<%= f.text_field :telefone, :id => "telefone" %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :celular, class: 'col-sm-2 control-label' %>
+    <%= f.label :celular %>
     <div class="col-sm-2">
-    	<%= f.text_field :celular, :id => "celular", class: "form-control" %>
+    	<%= f.text_field :celular, :id => "celular" %>
+    </div>
+  </div>
+  <div id="data_nascimento" class="form-group">
+    <%= f.label :data_de_nascimento %>
+    <div class="col-sm-2">
+    	<%= f.text_field :data_nascimento, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @cliente.data_nascimento.nil? ? @cliente.data_nascimento : l(@cliente.data_nascimento) %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :data_de_nascimento, "Data de Nascimento", class: 'col-sm-2 control-label' %>
-    <div class="col-sm-2">
-    	<%= f.text_field :data_nascimento, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @cliente.data_nascimento.nil? ? @cliente.data_nascimento : l(@cliente.data_nascimento) %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :email, class: 'col-sm-2 control-label' %>
+    <%= f.label :email %>
     <div class="col-sm-4">
-    	<%= f.text_field :email, class: "form-control" %>
+    	<%= f.text_field :email %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :observações, class: 'col-sm-2 control-label' %>
+    <%= f.label :observacoes %>
     <div class="col-sm-8">
-    	<%= f.text_area :observacoes, class: "form-control" %>
+    	<%= f.text_area :observacoes %>
     </div>
   </div>
   
   <div class="pull-right">
-	<%= link_to clientes_path, class: "btn btn-default" do %>
-		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
-	<% end %>
+  	<%= link_to clientes_path, class: "btn btn-default" do %>
+  		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
+  	<% end %>
 	  <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
 	  	<i class="glyphicon glyphicon-floppy-disk"></i> Salvar
 	  <% end %>

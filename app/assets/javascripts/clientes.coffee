@@ -12,11 +12,13 @@ atualiza = (curr) ->
 		
 		$("#cpf").hide()
 		$("#nome").hide()
+		$("#data_nascimento").hide()
 		$("#campo_cpf").prop('disabled', true)
 		$("#campo_nome").prop('disabled', true)
 	else
 		$("#nome").show()
 		$("#cpf").show()
+		$("#data_nascimento").show()
 		$("#campo_nome").prop('disabled', false)
 		$("#campo_cpf").prop('disabled', false)
 		

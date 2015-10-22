@@ -17,8 +17,23 @@ atualizaCliente = (c) ->
 		telefones = c.celular
 	$("#clienteTelefones").html(telefones)
 
-montarLinhaTabela = (quantidade, os) ->
-	return "<tr><td align='right'><input type='hidden' name='orcamento_servicos[][quantidade]' value='" + quantidade + "'></input>" + quantidade + "</td><td align='center'>" + os.servico.unidade + "</td><td><input type='hidden' name='orcamento_servicos[][servico_id]' value='" + os.servico.id + "'></input>" + os.servico.nome + "</td><td align='right'>R$ " + parseFloat(os.servico.valor).formatMoney(2, ",", ".") + "</td><td align='right'>R$ " + parseFloat(quantidade * os.servico.valor).formatMoney(2, ",", ".") + "</td></tr>"
+montarLinhaTabela = (quantidade, e) ->
+	return "<tr> \
+				<td align='right'> \
+					<input type='hidden' name='orcamento_servicos[][quantidade]' value='" + quantidade + "'></input>" + 
+					quantidade + "</td> \
+				<td align='center'>" + e.unidade + "</td> \
+				<td> \
+					<input type='hidden' name='orcamento_servicos[][servico_id]' value='" + e.id + "'></input>" + 
+					e.nome + "</td> \
+				<td align='right'>R$ " + parseFloat(e.valor).formatMoney(2, ",", ".") + "</td> \
+				<td align='right'>R$ " + parseFloat(quantidade * e.valor).formatMoney(2, ",", ".") + "</td> \
+				<td align='center'> \
+					<a href='#' class='deletarServico' val='" + parseFloat(quantidade * e.valor) + "'> \
+						<i class='glyphicon glyphicon-remove' title='Remover'></i> \
+					</a> \
+				</td> \
+			</tr>"
 
 $ ->
 	val = $("#orcamento_cliente_id").val() 
@@ -46,34 +61,38 @@ $ ->
 			success: (e, data, status, xhr) ->
 				$("#unidade").html(e.unidade)
 
+incrementarTotal = (valor) ->
+	$total = $("#hdnTotalServicos")
+	novototal = parseFloat($total.val()) + valor
+	$total.val(novototal)
+	$("#totalServicos").html("R$ " + novototal.formatMoney(2, ",", "."))
+	
+decrementarTotal = (valor) ->
+	$total = $("#hdnTotalServicos")
+	novototal = parseFloat($total.val()) - valor
+	$total.val(novototal)
+	$("#totalServicos").html("R$ " + novototal.formatMoney(2, ",", "."))
+
 $ ->
 	$("#btnDialogAddServico").click (e) ->
 		e.preventDefault()
 		servico = $("#orcamento_servico_servico_id").val()
 		quantidade = $("#orcamento_servico_quantidade").val()
-		data = $("#orcamento_data").val()
-		cliente_id = $("#orcamento_cliente_id").val()
-		descricao = $("#orcamento_descricao").val()
-		forma_pagamento = $("#orcamento_forma_pagamento").val()
-		observacoes = $("#orcamento_observacoes").val()
-		validade = $("#orcamento_validade").val()
 			
 		$.ajax
-			url: "/orcamentos/add_servico"
-			method: "POST"
+			url: "/servicos/" + servico + ".json"
 			datatype: "json"
-			data: {"orcamento": {"data":data, "cliente_id":cliente_id, "descricao":descricao, "forma_pagamento":forma_pagamento, "observacoes":observacoes, "validade":validade}, "orcamento_servico": {"servico_id": servico, "quantidade":quantidade}}
 			success: (e, data, status, xhr) ->
 				$("#orcamento_servico_servico_id").val("")
 				$("#orcamento_servico_quantidade").val("")
-				os = e.orcamento_servicos[0]
-				$("#tabelaServico").append(montarLinhaTabela(quantidade,os))
-				$("#totalServicos").html(os.valor_total)
-				#alert(e)
+				$("#tabelaServico").append(montarLinhaTabela(quantidade,e))
+				incrementarTotal(e.valor * quantidade)
 				
 		$("#myModal").modal('hide')
 		
 $ ->
-	$("#tabelaServico .deletarServico").click (e) ->
+	$(document).on "click", "#tabelaServico .deletarServico", (e) ->
 		e.preventDefault()
+		valor = $(this).attr('val')
+		decrementarTotal(valor)
 		tr = $(this).closest('tr').remove()
