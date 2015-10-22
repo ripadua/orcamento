@@ -79,6 +79,7 @@
             <th>Serviço</th>
             <th>Valor Unitário</th>
             <th>Valor Total</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -93,6 +94,7 @@
                   <%= s.servico.nome %></td>
                 <td align="right"><%= number_to_currency(s.servico.valor) %></td>
                 <td align="right"><%= number_to_currency(s.servico.valor * s.quantidade)  %></td>
+                <td align="center"><i class="glyphicon glyphicon-remove deletarServico" title="Remover"></i></td>
               </tr>
           <% end %>
         </tbody>

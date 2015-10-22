@@ -73,3 +73,7 @@ $ ->
 				
 		$("#myModal").modal('hide')
 		
+$ ->
+	$("#tabelaServico .deletarServico").click (e) ->
+		e.preventDefault()
+		tr = $(this).closest('tr').remove()
