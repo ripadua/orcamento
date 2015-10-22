@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :orcamentos
   resources :servicos
   devise_for :usuarios
-  resources :clientes 
+  resources :clientes
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
   get 'consultacep/:cep' => 'clientes#consulta_cep', as: :consulta_cep
+  
+  post 'orcamentos/add_servico' => 'orcamentos#add_servico', as: :add_servico
   
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
