@@ -148,6 +148,11 @@ pt-BR:
         data_de_nascimento: Data de Nascimento
         email: E-mail
         observacoes: Observações
+      orcamento:
+        descricao: Descrição
+        forma_pagamento: Forma de Pagamento
+        servicos: Serviços
+        observacoes: Observações
   number:
     currency:
       format:
@@ -216,3 +221,4 @@ pt-BR:
       long: "%d de %B de %Y, %H:%M"
       short: "%d de %B, %H:%M"
     pm: ''
+  

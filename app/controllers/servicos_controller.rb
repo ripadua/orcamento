@@ -28,7 +28,7 @@ class ServicosController < ApplicationController
 
     respond_to do |format|
       if @servico.save
-        format.html { redirect_to @servico, notice: 'Servico was successfully created.' }
+        format.html { redirect_to @servico, notice: 'Servico foi criado com sucesso.' }
         format.json { render :show, status: :created, location: @servico }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class ServicosController < ApplicationController
   def update
     respond_to do |format|
       if @servico.update(servico_params)
-        format.html { redirect_to @servico, notice: 'Servico was successfully updated.' }
+        format.html { redirect_to @servico, notice: 'Servico foi alterado com sucesso.' }
         format.json { render :show, status: :ok, location: @servico }
       else
         format.html { render :edit }
@@ -54,10 +54,14 @@ class ServicosController < ApplicationController
   # DELETE /servicos/1
   # DELETE /servicos/1.json
   def destroy
-    @servico.destroy
     respond_to do |format|
-      format.html { redirect_to servicos_url, notice: 'Servico was successfully destroyed.' }
-      format.json { head :no_content }
+      if @servico.destroy
+        format.html { redirect_to servicos_url, notice: 'Servico foi removido com sucesso.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to servicos_url, error: 'O serviço não pode ser removido pois existem orçamentos realizados para ele.' }
+        format.json { head :no_content }
+      end
     end
   end
 

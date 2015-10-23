@@ -4,6 +4,8 @@ class Orcamento < ActiveRecord::Base
   has_many :orcamento_servicos, :dependent => :destroy
   has_many :servicos, :through => :orcamento_servicos
   
+  paginates_per 10
+  
   def valor_total
     total = 0
     if orcamento_servicos.present?

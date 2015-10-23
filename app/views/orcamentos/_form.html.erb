@@ -10,13 +10,13 @@
   <% end %>
 
   <div class="form-group">
-    <%= f.label :data, class: 'col-sm-3 control-label' %>
+    <%= f.label :data %>
     <div class="col-sm-2">
-    	<%= f.text_field :data, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.data.nil? ? @orcamento.data : l(@orcamento.data) %>
+    	<%= f.text_field :data, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.data.nil? ? @orcamento.data : l(@orcamento.data) %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :cliente_id, class: 'col-sm-3 control-label' %>
+    <%= f.label :cliente_id %>
     <div class="col-sm-4">
     	<%= f.collection_select(:cliente_id, Cliente.all, :id, :nome, {prompt: true}, {class: 'form-control'})  %>
     </div>
@@ -51,25 +51,23 @@
 	  
   </div>
   <div class="form-group">
-    <%= f.label :descricao, "Descrição",class: 'col-sm-3 control-label' %>
+    <%= f.label :descricao %>
     <div class="col-sm-8">
-    	<%= f.text_field :descricao, class: 'form-control' %>
+    	<%= f.text_field :descricao %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :forma_pagamento, "Forma de Pagamento", class: 'col-sm-3 control-label' %>
+    <%= f.label :forma_pagamento %>
     <div class="col-sm-8">
-    	<%= f.text_field :forma_pagamento, class: 'form-control' %>
+    	<%= f.text_field :forma_pagamento %>
     </div>
   </div>
   
   <div class="form-group">
-    <div class="col-sm-3 control-label">
     <%= f.label :servicos, "Serviços" %>
       <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
         <i class="glyphicon glyphicon-plus" title="Adicionar Serviços" data-toggle="tooltip"></i>
       </button>
-    </div>
     <div class="col-sm-8">
       <table id="tabelaServico" class="table table-striped table-bordered table-hover table-responsive">
         <thead>
@@ -117,15 +115,15 @@
   </div>
   
   <div class="form-group">
-    <%= f.label :observacoes, "Observações", class: 'col-sm-3 control-label' %>
+    <%= f.label :observacoes %>
     <div class="col-sm-8">
-    	<%= f.text_area :observacoes, class: "form-control" %>
+    	<%= f.text_area :observacoes %>
     </div>
   </div>
   <div class="form-group">
-    <%= f.label :validade, "Data de Validade",class: 'col-sm-3 control-label' %>
+    <%= f.label :validade %>
     <div class="col-sm-2">
-    	<%= f.text_field :validade, class: 'form-control', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.validade.nil? ? @orcamento.validade : l(@orcamento.validade) %>
+    	<%= f.text_field :validade, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.validade.nil? ? @orcamento.validade : l(@orcamento.validade) %>
     </div>
   </div>
   

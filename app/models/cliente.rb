@@ -7,9 +7,11 @@ class Cliente < ActiveRecord::Base
   
   validates :celular, format: { with: /\A\((\d{2})\)\s+(\d{4})-(\d{4})/, message: "ou Telefone são obrigatórios" }, if: "telefone.blank?"
   
-  validates :email, format: { with: /\A([\w\.\-]+)@([\w\.\-]+)\.([\w]+)(\.[\w])?/ }, unless: "email.blank?"
+  validates :email, format: { with: /\A([\w\.\-]+)@([\w\.\-]+)\.([\w]+)(\.[\w])?/ }, allow_blank: true
   
   has_many :orcamento, :dependent => :restrict_with_error
+  
+  paginates_per 10
   
   def pessoa_fisica?
     self.tipo_pessoa == 0
