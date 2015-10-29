@@ -18,4 +18,5 @@
 //= require jquery.inputmask
 //= require bootstrap-datepicker/core
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.pt.js
+//= require jquery_nested_form
 //= require_directory ./global

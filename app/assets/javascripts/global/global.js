@@ -27,10 +27,3 @@ var n = this,
    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
  };
  
- $(function() {
-   $(".form-horizontal label").addClass("control-label col-sm-3");
-   $(".form-horizontal input").addClass("form-control");
-   $(".form-horizontal select").addClass("form-control");
-   $(".form-horizontal textarea").addClass("form-control");
- });
-	

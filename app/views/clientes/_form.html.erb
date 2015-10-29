@@ -1,119 +1,42 @@
-<%= form_for @cliente, :html => {:class => 'form-horizontal'} do |f| %>
-  <% if @cliente.errors.any? %>
-    <div id="error_explanation">
-      <h3><%= pluralize(@cliente.errors.count, "erro") %> não permitiram que este cliente fosse salvo:</h3>
+<%= bootstrap_form_for @cliente, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-8", inline_errors: false do |f| %>
+  
+  <%= f.alert_message "Por favor corrija os erros abaixo: " %>
 
-      <% @cliente.errors.full_messages.each do |message| %>
-        <div class="alert alert-danger"><%= message %></div>
-      <% end %>
-    </div>
-  <% end %>
-  <div class="form-group">
-    <%= f.label :tipo_pessoa %>
-    <div class="col-sm-2">
-    	<%= f.select :tipo_pessoa, options_for_select(listar_tipos_pessoa, @cliente.tipo_pessoa), 
-	    	{}, {id: "tipopessoa"} %>
-    </div>
-  </div>
-  <div id="nome" class="form-group">
-    <%= f.label :nome %>
-    <div class="col-sm-8">
-    	<%= f.text_field :nome, id: "campo_nome", autofocus: true %>
-    </div>
-  </div>
-  <div id="razao_social" class="form-group">
-    <%= f.label "Razão Social", "Razão Social" %>
-    <div class="col-sm-8">
-    	<%= f.text_field :nome, id: "campo_razao_social", autofocus: true %>
-    </div>
-  </div>
-  <div id="contato" class="form-group">
-    <%= f.label :contato %>
-    <div class="col-sm-8">
-    	<%= f.text_field :contato, id: "campo_contato" %>
-    </div>
-  </div>
-  <div id="cpf" class="form-group">
-    <%= f.label :cpf %>
-    <div class="col-sm-2">
-    	<%= f.text_field :documento, id: "campo_cpf" %>
-    </div>
-  </div>
-  <div id="cnpj" class="form-group">
-    <%= f.label :cnpj %>
-    <div class="col-sm-3">
-    	<%= f.text_field :documento, id: "campo_cnpj" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :cep %>
-    <div class="col-sm-2">
-	    <%= f.text_field :cep, :id => "cep" %>
-    </div>
-	<a href="#" class="btn btn-info" id="consultacep"><i class="glyphicon glyphicon-search"></i> Consultar CEP</a>
-	<span id="erroconsultacep"></span>
-  </div>
-  <div class="form-group">
-    <%= f.label :endereco %>
-    <div class="col-sm-8">
-    	<%= f.text_field :endereco, :id => "endereco" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :complemento %>
-    <div class="col-sm-4">
-    	<%= f.text_field :complemento, :id => "complemento" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :bairro %>
-    <div class="col-sm-4">
-    	<%= f.text_field :bairro, :id => "bairro" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :cidade %>
-    <div class="col-sm-4">
-    	<%= f.text_field :cidade, :id => "cidade" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :uf %>
-    <div class="col-sm-2">
-	    <%= f.select :uf, options_for_select(listar_ufs, @cliente.uf), 
-	    	{include_blank: "Selecione..."}, {class: 'form-control', id: 'uf'} %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :telefone %>
-    <div class="col-sm-2">
-    	<%= f.text_field :telefone, :id => "telefone" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :celular %>
-    <div class="col-sm-2">
-    	<%= f.text_field :celular, :id => "celular" %>
-    </div>
-  </div>
-  <div id="data_nascimento" class="form-group">
-    <%= f.label :data_de_nascimento %>
-    <div class="col-sm-2">
-    	<%= f.text_field :data_nascimento, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @cliente.data_nascimento.nil? ? @cliente.data_nascimento : l(@cliente.data_nascimento) %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :email %>
-    <div class="col-sm-4">
-    	<%= f.text_field :email %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :observacoes %>
-    <div class="col-sm-8">
-    	<%= f.text_area :observacoes %>
-    </div>
-  </div>
+	<%= f.select :tipo_pessoa, options_for_select(listar_tipos_pessoa, @cliente.tipo_pessoa), {control_col: 'col-sm-2'}, {id: "tipopessoa"} %>
+
+	<%= f.text_field :nome, id: "campo_nome", wrapper: {class: 'pessoa_fisica'}, autofocus: true %>
+	
+	<%= f.text_field :nome, label: 'Razão Social', wrapper: {class: 'pessoa_juridica'}, id: "campo_razao_social", autofocus: true %>
+	
+	<%= f.text_field :contato, id: "campo_contato", wrapper: {class: 'pessoa_juridica'} %>
+
+	<%= f.text_field :documento, label: 'CPF', control_col: 'col-sm-2', id: "campo_cpf", wrapper: {class: 'pessoa_fisica'} %>
+
+	<%= f.text_field :documento, label: 'CNPJ', control_col: 'col-sm-3', id: "campo_cnpj", wrapper: {class: 'pessoa_juridica'} %>
+    	
+  <%= f.text_field :cep, control_col: 'col-sm-3', id: "cep", append: link_to("Consultar CEP", "#", id: 'consultacep', class: "btn btn-info") %>
+
+	<%= f.text_field :endereco, id: "endereco" %>
+	
+	<%= f.text_field :complemento, control_col: 'col-sm-4', id: "complemento" %>
+	
+	<%= f.text_field :bairro, control_col: 'col-sm-4', id: "bairro" %>
+	
+	<%= f.text_field :cidade, control_col: 'col-sm-4', id: "cidade" %>
+	
+  <%= f.select :uf, options_for_select(listar_ufs, @cliente.uf), {include_blank: "Selecione...", control_col: 'col-sm-2'}, {class: 'form-control', id: 'uf'} %>
+
+	<%= f.text_field :telefone, control_col: 'col-sm-2', id: "telefone" %>
+
+	<%= f.text_field :celular, control_col: 'col-sm-2', id: "celular" %>
+	
+	<%= f.text_field :data_nascimento, control_col: 'col-sm-2', wrapper: {class: 'pessoa_fisica'}, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @cliente.data_nascimento.nil? ? @cliente.data_nascimento : l(@cliente.data_nascimento) %>
+	
+	<%= f.text_field :email, control_col: 'col-sm-4' %>
+	
+	<%= f.text_area :observacoes %>
+  
+  <input type='hidden' name='new_from_orcamento' value='<%= @orcamento %>'>
   
   <div class="pull-right">
   	<%= link_to clientes_path, class: "btn btn-default" do %>

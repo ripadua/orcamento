@@ -130,6 +130,12 @@ pt-BR:
       header:
         one: 'Não foi possível gravar %{model}: 1 erro'
         other: 'Não foi possível gravar %{model}: %{count} erros.'
+  activerecord:
+    attributes:
+      orcamento:
+        orcamento_servicos: Serviços
+        descricao: Descrição
+        forma_pagamento: Forma de Pagamento
   helpers:
     select:
       prompt: Por favor selecione...
@@ -153,6 +159,7 @@ pt-BR:
         forma_pagamento: Forma de Pagamento
         servicos: Serviços
         observacoes: Observações
+        local_servico: Local de Realização
   number:
     currency:
       format:

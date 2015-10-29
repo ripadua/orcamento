@@ -60,3 +60,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'kaminari'
 
 gem 'bootstrap-kaminari-views'
+
+gem 'bootstrap_form'
+
+gem "nested_form"

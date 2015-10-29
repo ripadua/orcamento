@@ -2,10 +2,16 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 verificaCliente = (val) ->
-	if val == ""
+	if val == undefined || val == ""
 		$("#infoCliente").hide()
 	else
 		$("#infoCliente").show()
+
+verificaLocalDiferente = ($localDiferente) ->
+	if $localDiferente.prop('checked')
+			$('.endereco_diferente').show()
+		else
+			$('.endereco_diferente').hide()
 
 atualizaCliente = (c) ->
 	$("#clienteEndereco").html(c.endereco + ", " + c.complemento + " - " + c.bairro + " - " + c.cidade + " - " + c.uf)
@@ -20,16 +26,16 @@ atualizaCliente = (c) ->
 montarLinhaTabela = (quantidade, e) ->
 	return "<tr> \
 				<td align='right'> \
-					<input type='hidden' name='orcamento_servicos[][quantidade]' value='" + quantidade + "'></input>" + 
+					<input type='hidden' name='orcamento[orcamento_servicos_attributes][][quantidade]' value='" + quantidade + "'></input>" + 
 					quantidade + "</td> \
 				<td align='center'>" + e.unidade + "</td> \
 				<td> \
-					<input type='hidden' name='orcamento_servicos[][servico_id]' value='" + e.id + "'></input>" + 
+					<input type='hidden' name='orcamento[orcamento_servicos_attributes][][servico_id]' value='" + e.id + "'></input>" + 
 					e.nome + "</td> \
 				<td align='right'>R$ " + parseFloat(e.valor).formatMoney(2, ",", ".") + "</td> \
 				<td align='right'>R$ " + parseFloat(quantidade * e.valor).formatMoney(2, ",", ".") + "</td> \
 				<td align='center'> \
-					<a href='#' class='deletarServico' val='" + parseFloat(quantidade * e.valor) + "'> \
+					<a href='#' class='deletarServico btn btn-danger btn-xs' val='" + parseFloat(quantidade * e.valor) + "'> \
 						<i class='glyphicon glyphicon-remove' title='Remover'></i> \
 					</a> \
 				</td> \
@@ -38,6 +44,7 @@ montarLinhaTabela = (quantidade, e) ->
 $ ->
 	val = $("#orcamento_cliente_id").val() 
 	verificaCliente(val)
+	verificaLocalDiferente($('#local_diferente'))
 
 	$("#orcamento_cliente_id").change (e) -> 
 		val = e.target.value.toLowerCase()
@@ -61,17 +68,31 @@ $ ->
 			success: (e, data, status, xhr) ->
 				$("#unidade").html(e.unidade)
 
-incrementarTotal = (valor) ->
+atualizarSubTotal = (novosubtotal) ->
+	$("#hdnSubTotalServicos").val(novosubtotal)
+	$("#subTotalServicos").html("R$ " + novosubtotal.formatMoney(2, ",", "."))
+
+atualizarValorTotal = () ->
+	$subtotal = $("#hdnSubTotalServicos")
 	$total = $("#hdnTotalServicos")
-	novototal = parseFloat($total.val()) + valor
+	$desconto = $('#hdnDesconto')
+	desconto_visivel = parseFloat($('#orcamento_desconto').val())
+	$desconto.val(desconto_visivel)
+	novototal = $subtotal.val() - $desconto.val() 
 	$total.val(novototal)
 	$("#totalServicos").html("R$ " + novototal.formatMoney(2, ",", "."))
+
+incrementarTotal = (valor) ->
+	$subtotal = $("#hdnSubTotalServicos")
+	novosubtotal = parseFloat($subtotal.val()) + valor
+	atualizarSubTotal(novosubtotal)
+	atualizarValorTotal(novosubtotal)
 	
 decrementarTotal = (valor) ->
-	$total = $("#hdnTotalServicos")
-	novototal = parseFloat($total.val()) - valor
-	$total.val(novototal)
-	$("#totalServicos").html("R$ " + novototal.formatMoney(2, ",", "."))
+	$subtotal = $("#hdnSubTotalServicos")
+	novosubtotal = parseFloat($subtotal.val()) - valor
+	atualizarSubTotal(novosubtotal)
+	atualizarValorTotal(novosubtotal)
 
 $ ->
 	$("#btnDialogAddServico").click (e) ->
@@ -96,3 +117,14 @@ $ ->
 		valor = $(this).attr('val')
 		decrementarTotal(valor)
 		tr = $(this).closest('tr').remove()
+		
+$ ->
+	$('#local_diferente').click () ->
+		verificaLocalDiferente($(this))
+
+		
+$ ->    $("#orcamento_desconto").inputmask({mask: '999,99', numericInput: true, placeholder: " " })
+
+$ ->
+	$('#orcamento_desconto').change () ->
+		atualizarValorTotal()

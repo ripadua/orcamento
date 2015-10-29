@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'clientes/new_cliente_from_orcamento' => 'clientes#new_from_orcamento', as: :new_cliente_from_orcamento
+  
+  get 'orcamentos/new/:cliente_id' => 'orcamentos#new_from_cliente', as: :new_orcamento_from_cliente
+  
   resources :orcamentos
   resources :servicos
   devise_for :usuarios
@@ -18,7 +22,6 @@ Rails.application.routes.draw do
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
   get 'consultacep/:cep' => 'clientes#consulta_cep', as: :consulta_cep
   
-  post 'orcamentos/add_servico' => 'orcamentos#add_servico', as: :add_servico
   
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

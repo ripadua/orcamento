@@ -1,34 +1,12 @@
-<%= form_for @servico, :html => {:class => 'form-horizontal'} do |f| %>
-<% if @servico.errors.any? %>
-<div id="error_explanation">
-	<h3><%= pluralize(@servico.errors.count, "erro") %> não permitiram que este serviço fosse salvo:</h3>
+<%= bootstrap_form_for @servico, layout: :horizontal, label_col: "col-sm-2", control_col: "col-sm-8", inline_errors: false do |f| %>
 
-	<% @servico.errors.full_messages.each do |message| %>
-	<div class="alert alert-danger">
-		<%= message %>
-	</div>
-	<% end %>
-</div>
-<% end %>
+<%= f.alert_message "Por favor corrija os erros abaixo: " %>
 
-<div class="form-group">
-	<%= f.label :nome %>
-	<div class="col-sm-8">
-		<%= f.text_field :nome, autofocus: true %>
-	</div>
-</div>
-<div class="form-group">
-	<%= f.label :unidade %>
-	<div class="col-sm-2">
-		<%= f.select :unidade, options_for_select(listar_unidades, @servico.unidade), {include_blank: "Selecione..."} %>
-	</div>
-</div>
-<div class="form-group">
-	<%= f.label :valor %>
-	<div class="col-sm-2">
-		<%= f.text_field :valor, id: "valor", value: number_to_currency(@servico.valor) %>
-	</div>
-</div>
+<%= f.text_field :nome, autofocus: true %>
+
+<%= f.select :unidade, options_for_select(listar_unidades, @servico.unidade), {include_blank: "Selecione...", control_col: 'col-sm-2'}  %>
+
+<%= f.text_field :valor, prepend: "R$", control_col: 'col-sm-2', id: "valor", value: number_to_currency(@servico.valor) %>
 
 <div class="pull-right">
 	<%= link_to servicos_path, class: "btn btn-default" do %>

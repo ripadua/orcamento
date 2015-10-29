@@ -17,16 +17,18 @@ class OrcamentosController < ApplicationController
     @orcamento = Orcamento.new
     @orcamento.data = Time.now
     @orcamento.validade = Time.now + 30.days
-    
-    #servico = Servico.find(1)
-    
-    #orcamento_servico = OrcamentoServico.new()
-    #orcamento_servico.servico = servico
-    #orcamento_servico.quantidade = 2
-    
-    #@orcamento.orcamento_servicos << orcamento_servico
+    @orcamento.desconto = 0.00
   end
-
+  
+  def new_from_cliente
+    @orcamento = Orcamento.new
+    @orcamento.data = Time.now
+    @orcamento.validade = Time.now + 30.days
+    @orcamento.desconto = 0.00
+    @orcamento.cliente = Cliente.find(params[:cliente_id])
+    render :new
+  end
+  
   # GET /orcamentos/1/edit
   def edit
   end
@@ -36,14 +38,9 @@ class OrcamentosController < ApplicationController
   def create
     @orcamento = Orcamento.new(orcamento_params)
     
-    for orc in orcamento_servicos_params
-      orcamento_servico = OrcamentoServico.new(orc)
-      @orcamento.orcamento_servicos << orcamento_servico
-    end
-    
     respond_to do |format|
       if @orcamento.save
-        format.html { redirect_to @orcamento, notice: 'Orcamento was successfully created.' }
+        format.html { redirect_to @orcamento, notice: 'Orçamento foi criado com sucesso.' }
         format.json { render :show, status: :created, location: @orcamento }
       else
         format.html { render :new }
@@ -56,16 +53,11 @@ class OrcamentosController < ApplicationController
   # PATCH/PUT /orcamentos/1.json
   def update
     
-    @orcamento.orcamento_servicos.clear
-    
-    for orc in orcamento_servicos_params
-      orcamento_servico = OrcamentoServico.new(orc)
-      @orcamento.orcamento_servicos << orcamento_servico
-    end
+    OrcamentoServico.where(orcamento: @orcamento).destroy_all
     
     respond_to do |format|
       if @orcamento.update(orcamento_params)
-        format.html { redirect_to @orcamento, notice: 'Orcamento was successfully updated.' }
+        format.html { redirect_to @orcamento, notice: 'Orçamento foi atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @orcamento }
       else
         format.html { render :edit }
@@ -79,20 +71,8 @@ class OrcamentosController < ApplicationController
   def destroy
     @orcamento.destroy
     respond_to do |format|
-      format.html { redirect_to orcamentos_url, notice: 'Orcamento was successfully destroyed.' }
+      format.html { redirect_to orcamentos_url, notice: 'Orçamento foi removido com sucesso.' }
       format.json { head :no_content }
-    end
-  end
-  
-  def add_servico
-    @orcamento = Orcamento.new(orcamento_params)
-    
-    orcamento_servico = OrcamentoServico.new(orcamento_servico_params)
-    
-    @orcamento.orcamento_servicos << orcamento_servico
-    
-    respond_to do |format|
-      format.json { render json: @orcamento.to_json(:include => {:orcamento_servicos => { :include => :servico}}) }
     end
   end
 
@@ -104,14 +84,6 @@ class OrcamentosController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def orcamento_params
-      params.require(:orcamento).permit(:data, :cliente_id, :descricao, :forma_pagamento, :observacoes, :validade)
-    end
-    
-    def orcamento_servico_params
-      params.require(:orcamento_servico).permit(:servico_id, :quantidade)
-    end
-    
-    def orcamento_servicos_params
-      params.permit(orcamento_servicos: [:servico_id, :quantidade]).require(:orcamento_servicos)
+      params.require(:orcamento).permit(:data, :cliente_id, :flag_local_diferente, :local_servico, :descricao, :forma_pagamento, :desconto, :observacoes, :validade, orcamento_servicos_attributes: [:id, :servico_id, :quantidade])
     end
 end

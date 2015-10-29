@@ -17,6 +17,13 @@ class ClientesController < ApplicationController
   # GET /clientes/new
   def new
     @cliente = Cliente.new
+    @orcamento = false
+  end
+
+  def new_from_orcamento
+    @cliente = Cliente.new
+    @orcamento = true
+    render :new
   end
 
   # GET /clientes/1/edit
@@ -27,11 +34,14 @@ class ClientesController < ApplicationController
   # POST /clientes.json
   def create
     @cliente = Cliente.new(cliente_params)
-
     respond_to do |format|
       if @cliente.save
-        format.html { redirect_to @cliente, notice: 'Cliente foi criado com sucesso.' }
-        format.json { render :show, status: :created, location: @cliente }
+        if params[:new_from_orcamento] == 'true'
+          format.html { redirect_to '/orcamentos/new/' + @cliente.id.to_s }
+        else  
+          format.html { redirect_to @cliente, notice: 'Cliente foi criado com sucesso.' }
+          format.json { render :show, status: :created, location: @cliente }
+        end
       else
         format.html { render :new }
         format.json { render json: @cliente.errors, status: :unprocessable_entity }
@@ -80,7 +90,7 @@ class ClientesController < ApplicationController
         result = JSON.parse(data)
         format.json { render json: result }
       else
-        render :status => 400
+        render status: :not_found
       end
     
     end

@@ -1,6 +1,7 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
  @import "bootstrap-datepicker3";
+ @import "rails_bootstrap_forms";
  
 html{
   height: 100%;
@@ -29,9 +30,17 @@ body {
    top: 50%;
 }
 
-form label:not(.checkbox):after { 
+form label.required:after {
+  content:" *:";
+}
+
+form label:not(.required):after { 
     content: ":"; 
     
+}
+
+form .checkbox label:after {
+    content: "";
 }
 
 th {

@@ -3,31 +3,17 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 atualiza = (curr) ->
 	if curr == '1'
-		$("#razao_social").show()
-		$("#contato").show()
-		$("#cnpj").show()
-		$("#campo_razao_social").prop('disabled', false)
-		$("#campo_contato").prop('disabled', false)
-		$("#campo_cnpj").prop('disabled', false)
+		$(".pessoa_juridica").show()
+		$(".pessoa_juridica input").prop('disabled', false)
 		
-		$("#cpf").hide()
-		$("#nome").hide()
-		$("#data_nascimento").hide()
-		$("#campo_cpf").prop('disabled', true)
-		$("#campo_nome").prop('disabled', true)
+		$(".pessoa_fisica").hide()
+		$(".pessoa_fisica input").prop('disabled', true)
 	else
-		$("#nome").show()
-		$("#cpf").show()
-		$("#data_nascimento").show()
-		$("#campo_nome").prop('disabled', false)
-		$("#campo_cpf").prop('disabled', false)
+		$(".pessoa_fisica").show()
+		$(".pessoa_fisica input").prop('disabled', false)
 		
-		$("#cnpj").hide()
-		$("#razao_social").hide()
-		$("#contato").hide()
-		$("#campo_cnpj").prop('disabled', true);
-		$("#campo_razao_social").prop('disabled', true);
-		$("#campo_contato").prop('disabled', true);
+		$(".pessoa_juridica").hide()
+		$(".pessoa_juridica input").prop('disabled', true)
 
 $ ->
 	$("#cep").inputmask('99999-999');
@@ -45,7 +31,7 @@ $ ->
 			url: "/consultacep/" + cep
 			datatype: "json"
 			error: (e, xhr, status, error) ->
-	    		$("#erroconsultacep").text "Cep inválido"
+	    		$("#new_cliente").prepend '<div class="alert alert-danger" id="errocep" role="alert">Cep inválido</div>'
 	    		$("#endereco").val("")
 	    		$("#complemento").val("")
 			    $("#bairro").val("")
@@ -53,6 +39,7 @@ $ ->
 			    $("#uf").val("")
 	    	success: (e, data, status, xhr) ->
 			    	$("#endereco").val(e.logradouro)
+			    	$("#errocep").remove()
 			    	$("#bairro").val(e.bairro)
 			    	$("#cidade").val(e.cidade)
 			    	$("#uf").val(e.estado)

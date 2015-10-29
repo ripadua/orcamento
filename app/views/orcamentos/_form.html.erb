@@ -1,73 +1,59 @@
-<%= form_for @orcamento, :html => {:class => 'form-horizontal'} do |f| %>
-  <% if @orcamento.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@orcamento.errors.count, "erro") %> não permitiram que este orçamento fosse salvo:</h2>
+<%= bootstrap_form_for @orcamento, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-8", inline_errors: false do |f| %>
+  
+  <%= f.alert_message "Por favor corrija os erros abaixo: " %>
 
-      <% @orcamento.errors.full_messages.each do |message| %>
-        <div class="alert alert-danger"><%= message %></div>
-      <% end %>
-    </div>
-  <% end %>
+	<%= f.text_field :data, control_col: 'col-sm-2', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.data.nil? ? @orcamento.data : l(@orcamento.data) %>
 
-  <div class="form-group">
-    <%= f.label :data %>
-    <div class="col-sm-2">
-    	<%= f.text_field :data, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.data.nil? ? @orcamento.data : l(@orcamento.data) %>
+  <div class="form-group ajusteLinha">
+    <div class="col-sm-offset-1 col-sm-8">
+      <%= f.collection_select :cliente_id, Cliente.order(:nome), :id, :nome, {prompt: true, control_col: 'col-sm-8'}  %>
     </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :cliente_id %>
-    <div class="col-sm-4">
-    	<%= f.collection_select(:cliente_id, Cliente.all, :id, :nome, {prompt: true}, {class: 'form-control'})  %>
-    </div>
-  </div>
-  <div id="infoCliente">
-	  <div class="form-group" style="padding-top: 5px;">
-	  	<%= f.label :endereco, "Endereço", class: 'col-sm-3', style: 'text-align: right' %>
-	  	<div class="col-sm-8">
-	  		<p id="clienteEndereco">
-		  		<% if @orcamento.cliente.present? %>
-	  				<%= @orcamento.cliente.endereco + ", " + @orcamento.cliente.complemento + " - " + @orcamento.cliente.bairro + " - " + @orcamento.cliente.cidade + " - " + @orcamento.cliente.uf %>
-			  	<% end %>
-	  		</p>
-	  	</div>
-	  </div>
-	  <div class="form-group">
-	  	<%= f.label :telefones, class: 'col-sm-3', style: 'text-align: right' %>
-	  	<div class="col-sm-8">
-	  		<p id="clienteTelefones">
-	  			<% if @orcamento.cliente.present? %>
-	  				<% if @orcamento.cliente.telefone.present? && @orcamento.cliente.celular.present? %>
-	  					<%= @orcamento.cliente.telefone + " - " + @orcamento.cliente.celular %>
-	  				<% elsif @orcamento.cliente.telefone.present? %>
-	  					<%= @orcamento.cliente.telefone %>
-	  				<% else %>
-	  					<%= @orcamento.cliente.celular %>
-	  				<% end %>
-	  			<% end %>
-	  		</p>
-	  	</div>
-	  </div>
-	  
-  </div>
-  <div class="form-group">
-    <%= f.label :descricao %>
-    <div class="col-sm-8">
-    	<%= f.text_field :descricao %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :forma_pagamento %>
-    <div class="col-sm-8">
-    	<%= f.text_field :forma_pagamento %>
-    </div>
+    <%= link_to '/clientes/new_cliente_from_orcamento', class: "btn btn-success" do %>
+    	<i class="glyphicon glyphicon-plus"></i> Novo cliente
+    <% end %>
   </div>
   
+  <div id="infoCliente">
+	  <%= f.static_control label: 'Endereço' do %>
+	    <span id="clienteEndereco" style="padding-top: 5px">
+    		<% if @orcamento.cliente.present? %>
+  				<%= @orcamento.cliente.endereco + ", " + @orcamento.cliente.complemento + " - " + @orcamento.cliente.bairro + " - " + @orcamento.cliente.cidade + " - " + @orcamento.cliente.uf %>
+  	  	<% end %>
+  	  </span>
+	  <% end %>
+	  
+	  <%= f.static_control label: 'Telefones' do %>  
+  		<span id="clienteTelefones" style="padding-top: 5px">
+  			<% if @orcamento.cliente.present? %>
+  				<% if @orcamento.cliente.telefone.present? && @orcamento.cliente.celular.present? %>
+  					<%= @orcamento.cliente.telefone + " - " + @orcamento.cliente.celular %>
+  				<% elsif @orcamento.cliente.telefone.present? %>
+  					<%= @orcamento.cliente.telefone %>
+  				<% else %>
+  					<%= @orcamento.cliente.celular %>
+  				<% end %>
+  			<% end %>
+  		</span>
+	  <% end %>
+	  
+    <%= f.form_group do %>
+	    <%= f.check_box :flag_local_diferente, label: 'O serviço será realizado em um endereço diferente.', id: 'local_diferente', checked: @orcamento.flag_local_diferente %>
+    <% end %>
+    
+    <%= f.text_field :local_servico, wrapper: {class: 'endereco_diferente', style: 'display:none'} %>
+  </div>
+  
+	<%= f.text_field :descricao %>
+
+	<%= f.text_field :forma_pagamento %>
+  
   <div class="form-group">
-    <%= f.label :servicos, "Serviços" %>
-      <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
-        <i class="glyphicon glyphicon-plus" title="Adicionar Serviços" data-toggle="tooltip"></i>
-      </button>
+    <div class='col-sm-3'>
+      <%= f.label :orcamento_servicos, 'Serviços', class: 'pull-right required', style: 'padding-top: 5px' %>
+    </div>
+    <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">
+      <i class="glyphicon glyphicon-plus" title="Adicionar Serviços" data-toggle="tooltip"></i>
+    </button>
     <div class="col-sm-8">
       <table id="tabelaServico" class="table table-striped table-bordered table-hover table-responsive">
         <thead>
@@ -84,11 +70,11 @@
           <% @orcamento.orcamento_servicos.each do |s| %>
             <tr>
               <td align="right">
-                <input type='hidden' name='orcamento_servicos[][quantidade]' value='<%= s.quantidade %>'></input>
+                <input type='hidden' name='orcamento[orcamento_servicos_attributes][][quantidade]' value='<%= s.quantidade %>'></input>
                 <%= s.quantidade %></td>
               <td align="center"><%= s.servico.unidade %></td>
               <td>
-                <input type='hidden' name='orcamento_servicos[][servico_id]' value='<%= s.servico.id %>'></input>
+                <input type='hidden' name='orcamento[orcamento_servicos_attributes][][servico_id]' value='<%= s.servico.id %>'></input>
                 <%= s.servico.nome %></td>
               <td align="right"><%= number_to_currency(s.servico.valor) %></td>
               <td align="right"><%= number_to_currency(s.servico.valor * s.quantidade)  %></td>
@@ -102,6 +88,24 @@
         </tbody>
         <tfoot>
           <tr>
+            <td colspan="4" class="rodapeTabela">SubTotal:</td>
+            <td class="rodapeTabela">
+              <input type='hidden' id='hdnSubTotalServicos' value='<%= @orcamento.valor_subtotal %>'>
+              <span id="subTotalServicos"><%= number_to_currency(@orcamento.valor_subtotal) %></span>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="4" class="rodapeTabela" style="vertical-align: middle">Desconto:</td>
+            <td class="rodapeTabela">
+              <div style="width: 100px" class="pull-right">
+                <input type='hidden' id='hdnDesconto' value='<%= @orcamento.desconto %>'>
+                <%= f.text_field_without_bootstrap :desconto, class: 'form-control', value: number_to_currency(@orcamento.desconto) %>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
             <td colspan="4" class="rodapeTabela">Total:</td>
             <td class="rodapeTabela">
               <input type='hidden' id='hdnTotalServicos' value='<%= @orcamento.valor_total %>'>
@@ -114,18 +118,9 @@
     </div>
   </div>
   
-  <div class="form-group">
-    <%= f.label :observacoes %>
-    <div class="col-sm-8">
-    	<%= f.text_area :observacoes %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :validade %>
-    <div class="col-sm-2">
-    	<%= f.text_field :validade, data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.validade.nil? ? @orcamento.validade : l(@orcamento.validade) %>
-    </div>
-  </div>
+	<%= f.text_area :observacoes %>
+	
+	<%= f.text_field :validade, control_col: 'col-sm-2', data: {provide: 'datepicker', "date-format" => 'dd/mm/yyyy', 'date-language' => 'pt-BR'}, value: @orcamento.validade.nil? ? @orcamento.validade : l(@orcamento.validade) %>
   
   <div class="pull-right">
   	<%= link_to orcamentos_path, class: "btn btn-default" do %>
@@ -136,39 +131,6 @@
 	  <% end %>
   </div>
 
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Adicionar Serviço</h4>
-        </div>
-        <div class="modal-body">
-          <%= form_for "orcamento_servico", remote: true, :html => {:class => 'form-horizontal'} do |f| %>
-            <div class="form-group">
-              <%= f.label :servico_id, "Serviço", class: 'col-sm-3 control-label' %>
-              <div class="col-sm-9">
-              	<%= f.collection_select(:servico_id, Servico.all, :id, :nome, {prompt: true}, {class: 'form-control'})  %>
-              </div>
-            </div>
-            <div class="form-group">
-              <%= f.label :quantidade, class: 'col-sm-3 control-label' %>
-              <div class="col-sm-3">
-              	<div class="input-group">
-              	  <%= f.number_field :quantidade, min: 1, class: 'form-control' %>
-              	  <span class="input-group-addon" id="unidade"></span>
-              	</div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <div class="modal-footer">
-          <%= button_tag(type: 'submit', id: 'btnDialogAddServico', class: 'btn btn-primary') do %>
-      	  	<i class="glyphicon glyphicon-floppy-disk"></i> Adicionar
-      	  <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render 'modalservicos' %>
 
 <% end %>

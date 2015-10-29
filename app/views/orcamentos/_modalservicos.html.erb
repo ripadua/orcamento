@@ -1,0 +1,34 @@
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Adicionar Serviço</h4>
+        </div>
+        <div class="modal-body">
+          <%= form_for "orcamento_servico", remote: true, :html => {:class => 'form-horizontal'} do |f| %>
+            <div class="form-group">
+              <%= f.label :servico_id, "Serviço", class: 'col-sm-3 control-label' %>
+              <div class="col-sm-9">
+              	<%= f.collection_select(:servico_id, Servico.order(:nome), :id, :nome, {prompt: true}, {class: 'form-control'})  %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :quantidade, class: 'col-sm-3 control-label' %>
+              <div class="col-sm-3">
+              	<div class="input-group">
+              	  <%= f.number_field :quantidade, min: 1, class: 'form-control' %>
+              	  <span class="input-group-addon" id="unidade"></span>
+              	</div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <%= button_tag(type: 'submit', id: 'btnDialogAddServico', class: 'btn btn-primary') do %>
+      	  	<i class="glyphicon glyphicon-floppy-disk"></i> Adicionar
+      	  <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
