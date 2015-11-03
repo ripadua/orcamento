@@ -27,13 +27,12 @@ montarLinhaTabela = (quantidade, e) ->
 	return "<tr> \
 				<td align='right'> \
 					<input type='hidden' name='orcamento[orcamento_servicos_attributes][][quantidade]' value='" + quantidade + "'></input>" + 
-					quantidade + "</td> \
-				<td align='center'>" + e.unidade + "</td> \
+					quantidade + " " + e.unidade + "</td> \
 				<td> \
 					<input type='hidden' name='orcamento[orcamento_servicos_attributes][][servico_id]' value='" + e.id + "'></input>" + 
 					e.nome + "</td> \
-				<td align='right'>R$ " + parseFloat(e.valor).formatMoney(2, ",", ".") + "</td> \
-				<td align='right'>R$ " + parseFloat(quantidade * e.valor).formatMoney(2, ",", ".") + "</td> \
+				<td align='right'>" + parseFloat(e.valor).formatMoney(2, ",", ".") + "</td> \
+				<td align='right'><span style='padding-right: 12px'>" + parseFloat(quantidade * e.valor).formatMoney(2, ",", ".") + "</span></td> \
 				<td align='center'> \
 					<a href='#' class='deletarServico btn btn-danger btn-xs' val='" + parseFloat(quantidade * e.valor) + "'> \
 						<i class='glyphicon glyphicon-remove' title='Remover'></i> \
@@ -70,7 +69,7 @@ $ ->
 
 atualizarSubTotal = (novosubtotal) ->
 	$("#hdnSubTotalServicos").val(novosubtotal)
-	$("#subTotalServicos").html("R$ " + novosubtotal.formatMoney(2, ",", "."))
+	$("#subTotalServicos").html(novosubtotal.formatMoney(2, ",", "."))
 
 atualizarValorTotal = () ->
 	$subtotal = $("#hdnSubTotalServicos")
@@ -80,7 +79,7 @@ atualizarValorTotal = () ->
 	$desconto.val(desconto_visivel)
 	novototal = $subtotal.val() - $desconto.val() 
 	$total.val(novototal)
-	$("#totalServicos").html("R$ " + novototal.formatMoney(2, ",", "."))
+	$("#totalServicos").html(novototal.formatMoney(2, ",", "."))
 
 incrementarTotal = (valor) ->
 	$subtotal = $("#hdnSubTotalServicos")
@@ -112,6 +111,7 @@ $ ->
 		$("#myModal").modal('hide')
 		
 $ ->
+	$(document).off "click", "#tabelaServico .deletarServico"
 	$(document).on "click", "#tabelaServico .deletarServico", (e) ->
 		e.preventDefault()
 		valor = $(this).attr('val')

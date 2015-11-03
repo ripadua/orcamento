@@ -58,11 +58,10 @@
       <table id="tabelaServico" class="table table-striped table-bordered table-hover table-responsive">
         <thead>
           <tr >
-            <th>Qtd</th>
-            <th>Unid</th>
+            <th>Quantidade</th>
             <th>Serviço</th>
-            <th>Valor Unitário</th>
-            <th>Valor Total</th>
+            <th>Valor Unitário R$</th>
+            <th>Valor Total R$</th>
             <th></th>
           </tr>
         </thead>
@@ -71,13 +70,12 @@
             <tr>
               <td align="right">
                 <input type='hidden' name='orcamento[orcamento_servicos_attributes][][quantidade]' value='<%= s.quantidade %>'></input>
-                <%= s.quantidade %></td>
-              <td align="center"><%= s.servico.unidade %></td>
+                <%= s.quantidade.to_s + " " + s.servico.unidade %></td>
               <td>
                 <input type='hidden' name='orcamento[orcamento_servicos_attributes][][servico_id]' value='<%= s.servico.id %>'></input>
                 <%= s.servico.nome %></td>
-              <td align="right"><%= number_to_currency(s.servico.valor) %></td>
-              <td align="right"><%= number_to_currency(s.servico.valor * s.quantidade)  %></td>
+              <td align="right"><%= number_to_currency(s.servico.valor, unit: '') %></td>
+              <td align="right"><span style='padding-right: 12px'><%= number_to_currency(s.servico.valor * s.quantidade, unit: '')  %></span></td>
               <td align="center">
                 <a href="#" class="deletarServico btn btn-danger btn-xs" val='<%= s.servico.valor * s.quantidade %>'>
                   <i class="glyphicon glyphicon-remove" title="Remover"></i>
@@ -88,28 +86,28 @@
         </tbody>
         <tfoot>
           <tr>
-            <td colspan="4" class="rodapeTabela">SubTotal:</td>
+            <td colspan="3" class="rodapeTabela">SubTotal R$:</td>
             <td class="rodapeTabela">
               <input type='hidden' id='hdnSubTotalServicos' value='<%= @orcamento.valor_subtotal %>'>
-              <span id="subTotalServicos"><%= number_to_currency(@orcamento.valor_subtotal) %></span>
+              <span id="subTotalServicos" style="padding-right: 12px"><%= number_to_currency(@orcamento.valor_subtotal, unit: '') %></span>
             </td>
             <td></td>
           </tr>
           <tr>
-            <td colspan="4" class="rodapeTabela" style="vertical-align: middle">Desconto:</td>
+            <td colspan="3" class="rodapeTabela" style="vertical-align: middle">Desconto R$:</td>
             <td class="rodapeTabela">
-              <div style="width: 100px" class="pull-right">
+              <div style="width: 120px" class="pull-right">
                 <input type='hidden' id='hdnDesconto' value='<%= @orcamento.desconto %>'>
-                <%= f.text_field_without_bootstrap :desconto, class: 'form-control', value: number_to_currency(@orcamento.desconto) %>
+                <%= f.text_field_without_bootstrap :desconto, class: 'form-control', value: number_to_currency(@orcamento.desconto, unit: '') %>
               </div>
             </td>
             <td></td>
           </tr>
           <tr>
-            <td colspan="4" class="rodapeTabela">Total:</td>
+            <td colspan="3" class="rodapeTabela">Total R$:</td>
             <td class="rodapeTabela">
               <input type='hidden' id='hdnTotalServicos' value='<%= @orcamento.valor_total %>'>
-              <span id="totalServicos"><%= number_to_currency(@orcamento.valor_total) %></span>
+              <span id="totalServicos" style="padding-right: 12px"><%= number_to_currency(@orcamento.valor_total, unit: '') %></span>
             </td>
             <td></td>
           </tr>

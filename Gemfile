@@ -64,3 +64,7 @@ gem 'bootstrap-kaminari-views'
 gem 'bootstrap_form'
 
 gem "nested_form"
+
+gem 'wicked_pdf'
+
+gem 'wkhtmltopdf-binary'

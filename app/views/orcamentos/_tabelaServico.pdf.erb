@@ -1,0 +1,42 @@
+<table id="tabelaServico" class="table table-striped table-bordered table-hover table-responsive">
+  <thead>
+    <tr >
+      <th>Quantidade</th>
+      <th>Serviço</th>
+      <th>Valor Unitário R$</th>
+      <th>Valor Total R$</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @orcamento.orcamento_servicos.each do |s| %>
+      <tr>
+        <td align="right"><%= s.quantidade.to_s + " " + s.servico.unidade %></td>
+        <td><%= s.servico.nome %></td>
+        <td align="right"><%= number_to_currency(s.servico.valor, unit: '') %></td>
+        <td align="right"><%= number_to_currency(s.servico.valor * s.quantidade, unit: '')  %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3" class="rodapeTabela">SubTotal R$:</td>
+      <td class="rodapeTabela">
+        <span id="subTotalServicos"><%= number_to_currency(@orcamento.valor_subtotal, unit: '') %></span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="rodapeTabela" style="vertical-align: middle">Desconto R$:</td>
+      <td class="rodapeTabela">
+        <div style="width: 100px" class="pull-right">
+          <span id="subTotalServicos"><%= number_to_currency(@orcamento.desconto, unit: '') %></span>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="rodapeTabela">Total R$:</td>
+      <td class="rodapeTabela">
+        <span id="totalServicos"><%= number_to_currency(@orcamento.valor_total, unit: '') %></span>
+      </td>
+    </tr>
+  </tfoot>
+</table>

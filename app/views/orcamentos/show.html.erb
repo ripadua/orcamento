@@ -5,6 +5,11 @@
 </div>
 
 <p>
+  <strong>Número:</strong>
+  <%= @orcamento.id %>
+</p>
+
+<p>
   <strong>Data:</strong>
   <%= l @orcamento.data %>
 </p>
@@ -13,6 +18,31 @@
   <strong>Cliente:</strong>
   <%= @orcamento.cliente.nome %>
 </p>
+
+<p>
+  <strong>Endereço:</strong>
+  <%= @orcamento.cliente.endereco + ", " + @orcamento.cliente.complemento + " - " + @orcamento.cliente.bairro + " - " + @orcamento.cliente.cidade + " - " + @orcamento.cliente.uf %>
+</p>
+
+<p>
+  <strong>Telefones:</strong>
+  <% if @orcamento.cliente.present? %>
+		<% if @orcamento.cliente.telefone.present? && @orcamento.cliente.celular.present? %>
+			<%= @orcamento.cliente.telefone + " - " + @orcamento.cliente.celular %>
+		<% elsif @orcamento.cliente.telefone.present? %>
+			<%= @orcamento.cliente.telefone %>
+		<% else %>
+			<%= @orcamento.cliente.celular %>
+		<% end %>
+	<% end %>
+</p>
+
+<% if @orcamento.flag_local_diferente %>
+  <p>
+    <strong>Local de Realização do Serviço:</strong>
+    <%= @orcamento.local_servico %>
+  </p>
+<% end %>
 
 <p>
   <strong>Descrição:</strong>
@@ -42,6 +72,10 @@
 <div class="pull-right">
 	<%= link_to orcamentos_path, class: "btn btn-default" do %>
 		<i class="glyphicon glyphicon-arrow-left"></i> Voltar
+	<% end %>
+	
+	<%= link_to print_orcamento_path(@orcamento), target: '_blank', class: "btn btn-default" do %>
+		<i class="glyphicon glyphicon-print"></i> Versão para impressão
 	<% end %>
 	
 	<%= link_to edit_orcamento_path(@orcamento), class: "btn btn-info" do %>

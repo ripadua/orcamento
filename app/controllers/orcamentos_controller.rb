@@ -1,5 +1,5 @@
 class OrcamentosController < ApplicationController
-  before_action :set_orcamento, only: [:show, :edit, :update, :destroy]
+  before_action :set_orcamento, only: [:show, :edit, :update, :destroy, :print]
 
   # GET /orcamentos
   # GET /orcamentos.json
@@ -75,7 +75,12 @@ class OrcamentosController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
+  # GET /orcamentos/1/print
+  def print
+    render :layout => 'orcamento'
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_orcamento

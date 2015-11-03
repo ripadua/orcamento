@@ -1,0 +1,81 @@
+<br/>
+
+<%= image_tag 'logo.png', width: '300' %>
+
+<br/>
+
+<div style="text-align: center">
+  <h4>
+    <strong>Orçamento Nº: <%= @orcamento.id %></strong>
+  </h4>
+</div>
+
+<p>
+  <strong>Goiânia, <%=l @orcamento.data, format: :long %></strong>
+</p>
+
+<p>
+  <strong>A</strong>
+</p>
+
+<p>
+  <strong><%= @orcamento.cliente.nome %></strong>
+</p>
+
+<% if @orcamento.cliente.pessoa_juridica? %>
+  <p>
+    <strong>Att: <%= @orcamento.cliente.contato %></strong>
+  </p>
+<% end %>
+
+<p>Prezados Senhores,</p>
+
+<p>Em atendimento a vossa solicitação, vimos através da presente, apresentar-lhes proposta orçamentária de <%= @orcamento.descricao.downcase %>, conforme segue: </p>
+
+<p>
+  <%= render 'tabelaServico' %>
+</p>
+
+<p>
+  <strong>Descrição dos serviços:</strong>
+  <%= @orcamento.descricao %>
+</p>
+
+<p>
+  <strong>Data da execução dos serviços:</strong>
+  Os serviços poderão ser executados em qualquer dia conforme vossa solicitação
+</p>
+
+<p>
+  <strong>Forma de Pagamento:</strong>
+  <%= @orcamento.forma_pagamento %>
+</p>
+
+<% if @orcamento.observacoes.present? %>
+  <p>
+    <strong>Observações:</strong>
+    <%= @orcamento.observacoes %>
+  </p>
+<% end %>
+
+<p>
+  <strong>Este orçamento tem validade até </strong>
+  <%= l @orcamento.validade %>
+</p>
+
+<p>
+  Sendo o que temos para o momento e, no aguardo do vosso pronunciamento, subscrevemo-nos.
+</p>
+
+<p>Atenciosamente,</p>
+
+<p>Antonio Crispim Rodrigues Filho</p>
+
+<p></p>
+
+<div style="text-align: center">
+  <p>
+    <strong>Rua A Qd. 01 Lt. 36, Setor São José - Goiânia - GO / CEP: 74.440-010</strong>
+  </p>
+  <p><strong>(62) 3271-6240 / (62) 9321-6945</strong></p>
+</div>
